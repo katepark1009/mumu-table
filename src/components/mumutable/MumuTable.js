@@ -75,6 +75,7 @@ export class MumuTable extends Component {
   }
 
   //Remove data entry
+  //removeItemKey must be unique identifier like 'id'
   removeTableData(arr, removeItemKey) {
     console.log('remove: ', removeItemKey)
     let removeItem = arr && arr.find((obj) => obj.id === removeItemKey)

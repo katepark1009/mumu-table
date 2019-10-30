@@ -5,6 +5,7 @@ import { MumuTable } from "../mumutable";
 import styled from '@emotion/styled'
 import { Formik } from 'formik';
 import * as Yup from 'yup'
+import { Patables } from "../../../node_modules/patables";
 
 const List = styled.li`
   list-style-type: none;
@@ -24,13 +25,21 @@ const SearchHeader = styled.h3`
   margin-right:10px;
 `
 
-const Container = styled.div`
-  height: 200px;
+const Label = styled.label`
+  width: 100px;
 `
 
 const StyledDiv = styled.div`
   margin-right:10px;
-  display: inline-block;
+  margin-bottom:20px;
+`
+
+const Error = styled.div`
+  position: absolute;
+  font-size: small;
+  color: red; 
+  bottom: -17px;
+  right: 48%;
 `
 
 class Example extends Component {
@@ -47,90 +56,89 @@ class Example extends Component {
   }
 
   FormSchema = Yup.object().shape({
-    firstname: Yup.string().required('please type firstname'),
-    lastname: Yup.string().required('please type lastname'),
-    dob: Yup.string().required('please type dob'),
-    occupation: Yup.string().required('please type occupation '),
-    gender: Yup.string().required('please type gender'),
-    phone: Yup.string().required('please type phone'),
+    firstname: Yup.string().required('required'),
+    lastname: Yup.string().required('required'),
+    dob: Yup.string().required('required'),
+    occupation: Yup.string().required('required'),
+    phone: Yup.string().required('required'),
   })
 
   render() {
     const initialValues = {
-      id: '',
       firstname:'',
       lastname: '',
       dob: '',
       occupation: '',
-      gender: '',
       phone: '',
     }
     const BasicForm = (props) => (
       <div className='form-group mb-2 col'>
             <form onSubmit={props.handleSubmit}>
-              <StyledDiv className='col-2'>
-              <label htmlFor=''>firstname</label>
+              <StyledDiv className='input-group'>
+              <Label htmlFor=''>First name</Label>
               <input
+                className='form-control'
                 type="text"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 value={props.values.firstname}
                 name="firstname"
               />
-              {props.errors.firstname && <span id="feedback" className='col-2'>{props.errors.firstname}</span>}
+              {props.errors.firstname && <Error id="feedback" className='col-2' >{props.errors.firstname}</Error>}
               </StyledDiv>
-              <StyledDiv className='col-2'>
-              <label htmlFor=''>lastname</label>
+              <StyledDiv className='input-group'>
+              <Label htmlFor=''>Lastname</Label>
               <input
+                className='form-control'
                 type="text"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 value={props.values.lastname}
                 name="lastname"
               />
+              {props.errors.lastname && <Error id="feedback" className='col-2' >{props.errors.lastname}</Error>}
               </StyledDiv>
-              <StyledDiv className='col-2'>
-              <label htmlFor=''>dob</label>
+              <StyledDiv className='input-group'>
+              <Label htmlFor=''>DOB</Label>
               <input
+                className='form-control'
                 type="text"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 value={props.values.dob}
                 name="dob"
               />
+              {props.errors.dob && <Error id="feedback" className='col-2' >{props.errors.dob}</Error>}
               </StyledDiv>
-              <StyledDiv className='col-2'>
-              <label htmlFor=''>occupation</label>
+              <StyledDiv className='input-group'>
+              <Label htmlFor=''>Occupation</Label>
               <input
+                className='form-control'
                 type="text"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 value={props.values.occupation}
                 name="occupation"
               />
+              {props.errors.occupation && <Error id="feedback" className='col-2' >{props.errors.occupation}</Error>}
               </StyledDiv>
-              <StyledDiv className='col-2'>
-              <label htmlFor=''>gender</label>
+              <StyledDiv className='input-group'>
+              <Label htmlFor=''>Phone</Label>
               <input
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.gender}
-                name="gender"
-              />
-              </StyledDiv>
-              <StyledDiv className='col-2'>
-              <label htmlFor=''>phone</label>
-              <input
+                className='form-control'
                 type="text"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 value={props.values.phone}
                 name="phone"
               />
+              {props.errors.phone && <Error id="feedback" className='col-2' >{props.errors.phone}</Error>}
               </StyledDiv>
               {props.errors.name && <div id="feedback">{props.errors.name}</div>}
-              <button type="submit">Submit</button>
+              
+              <button type="submit" className="btn btn-primary mt-3" >
+             Add Data
+            </button>
             </form>
         </div>
     );
@@ -147,9 +155,23 @@ class Example extends Component {
               value={props.search}
               onChange={props.setSearchTerm}
             />
-            <button type="button" class="btn btn-primary" data-toggle="modal">
-             Add Data
-            </button>
+            
+            <div className="col offset-2">
+              <div className="form-inline">
+                <label className="my-1 mr-2">Result set: </label>
+                <select
+                  className="form-control"
+                  value={props.resultSet}
+                  onChange={e => {
+                    props.setResultSet(parseInt(e.target.value));
+                  }}
+                >
+                  <option>5</option>
+                  <option>10</option>
+                  <option>15</option>
+                </select>
+              </div>
+            </div>
           </div>
           <table className="table table-hover mb-4">
             <thead className="bg-primary text-white">
@@ -169,9 +191,6 @@ class Example extends Component {
                 <th name="occupation" onClick={props.setColumnSortToggle}>
                   occupation
                 </th>
-                <th name="gender" onClick={props.setColumnSortToggle}>
-                gender
-                </th>
                 <th name="phone" onClick={props.setColumnSortToggle}>
                 phone
                 </th>
@@ -189,7 +208,6 @@ class Example extends Component {
                     <TableData>{user.lastname}</TableData>
                     <TableData>{user.dob}</TableData>
                     <TableData>{user.occupation}</TableData>
-                    <TableData>{user.gender}</TableData>
                     <TableData>{user.phone}</TableData>
                     <TableData onClick={()=> props.removeTableData(this.state.users, user.id)}>Remove ❌</TableData>
                   </tr>
@@ -198,25 +216,8 @@ class Example extends Component {
             </tbody>
           </table>
 
-          <div className="row my-4 justify-content-between">
-            <div className="col-md-6">
-              <div className="form-inline">
-                <label className="my-1 mr-2">Result set: </label>
-                <select
-                  className="form-control"
-                  value={props.resultSet}
-                  onChange={e => {
-                    props.setResultSet(parseInt(e.target.value));
-                  }}
-                >
-                  <option>5</option>
-                  <option>10</option>
-                  <option>15</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="col-md-6">
+        <div className="row my-4 justify-content-between">           
+            <div className="col">
               <ListContainer className="pagination rounded-flat pagination-primary d-flex justify-content-center">
                 <List
                   className={
@@ -275,29 +276,13 @@ class Example extends Component {
     };
 
     return (
-      <div className="container mt-5">
+      <div className="mt-5">
         <div className="row">
-          <div className="col-md-12">
-          <Container>
-          <h1>My Form</h1>
-          <Formik
-           initialValues={initialValues}
-           validationSchema={this.FormSchema}
-           render={BasicForm}
-           onSubmit={(values, actions) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              actions.setSubmitting(false);
-            }, 500);
-             }}
-           >
-           </Formik>
-           </Container>
+          <div className="col-8 ml-5">
+            <div>
             <h1>Mumu Table</h1>
-
             <hr className="mb-4" />
-
-            <MumuTable
+            <Patables
               render={renderTable}
               initialData={this.state.users}
               resultSet={5}
@@ -305,6 +290,26 @@ class Example extends Component {
               sortOrder="desc"
               searchKeys={["firstname", "lastname", 'id']}
             />
+            </div>
+          </div>
+
+          <div className="col-3">
+            <div>
+            <h1>Add User</h1>
+            <hr className="mb-4" />
+              <Formik
+               initialValues={initialValues}
+               validationSchema={this.FormSchema}
+               render={BasicForm}
+               onSubmit={(values, actions) => {
+                setTimeout(() => {
+                  alert(JSON.stringify(values, null, 2));
+                  actions.setSubmitting(false);
+                }, 200);
+                 }}
+              >
+              </Formik>
+            </div>
           </div>
         </div>
       </div>
