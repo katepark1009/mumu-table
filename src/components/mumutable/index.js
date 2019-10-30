@@ -12,6 +12,10 @@ const ListContainer = styled.ul`
 display: flex;
 `
 
+const TableData = styled.td`
+min-width: 120px
+`
+
 class MumuTable extends Component {
   constructor(props) {
     super(props);
@@ -71,14 +75,14 @@ class MumuTable extends Component {
               {props.visibleData.map((user, i) => {
                 return (
                   <tr key={i}>
-                    <td>{user.firstname}</td>
-                    <td>{user.lastname}</td>
-                    <td>{user.dob}</td>
-                    <td>{user.occupation}</td>
-                    <td>{user.gender}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.latitude}</td>
-                    <td>{user.longitude}</td>
+                    <TableData>{user.firstname}</TableData>
+                    <TableData>{user.lastname}</TableData>
+                    <TableData>{user.dob}</TableData>
+                    <TableData>{user.occupation}</TableData>
+                    <TableData>{user.gender}</TableData>
+                    <TableData>{user.phone}</TableData>
+                    <TableData>{user.latitude}</TableData>
+                    <TableData>{user.longitude}</TableData>
                   </tr>
                 );
               })}

@@ -54,7 +54,7 @@ export class Patables extends Component {
 
   searchFilter(arr, searchTerm, searchkeys) {
     // if searchkeys aren't provided use the keys off the first object in array by default
-    let searchKeys = searchkeys.length === 0 ? Object.keys(arr[0]) : searchkeys
+    let searchKeys = searchkeys.length === 0 ? Object.keys(arr[0]) : searchkeys //  Object.keys(arr[0]) = firstname
     let filteredArray = arr.filter((obj) => {
       return searchKeys.some((key) => {
         if (obj[key] === null || obj[key] === undefined) { return false }
