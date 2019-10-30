@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { isEqual, isFunction } from './utils/helpers'
 
-export class Patables extends Component {
+export class MumuTable extends Component {
   constructor(props) {
     super(props)
 
@@ -28,6 +28,7 @@ export class Patables extends Component {
     this.range = this.range.bind(this)
     this.getPagination = this.getPagination.bind(this)
     this.getRenderProps = this.getRenderProps.bind(this)
+    this.removeTableData = this.removeTableData.bind(this)
   }
 
   // LIFECYCLE METHODS
@@ -71,6 +72,19 @@ export class Patables extends Component {
     }
 
     return filteredArray
+  }
+
+  //Remove data entry
+  removeTableData(arr, removeItemKey) {
+    console.log('remove: ', removeItemKey)
+    let removeItem = arr && arr.find((obj) => obj.id === removeItemKey)
+    let index = arr && removeItem && arr.findIndex((obj)=> removeItem.id === obj.id)
+    if(index !== -1 && index !== undefined) {
+      arr.splice(index,1)
+      this.setState(() => ({users: arr}))
+    } else {
+      console.log('no matching id to remove')
+    }
   }
 
   // SORTING
@@ -200,7 +214,8 @@ export class Patables extends Component {
       nextDisabled: this.state.totalPages === this.state.currentPage,
       prevDisabled: this.state.currentPage === 1,
       visibleData: this.getVisibleData(),
-      paginationButtons: this.getPagination()
+      paginationButtons: this.getPagination(),
+      removeTableData: this.removeTableData
     }
   }
 
@@ -227,7 +242,7 @@ export class Patables extends Component {
   }
 }
 
-Patables.propTypes = {
+MumuTable.propTypes = {
   render: PropTypes.func,
   children: PropTypes.func,
   initialData: PropTypes.array.isRequired,

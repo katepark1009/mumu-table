@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import MumuTable from '../src/components/mumutable'
+import Example from '../src/components/example'
 
 function App() {
   return (
     <div className="App">
-      <MumuTable />
+      <Example />
     </div>
   );
 }
