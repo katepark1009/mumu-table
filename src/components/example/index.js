@@ -36,15 +36,7 @@ const StyledDiv = styled.div`
 class Example extends Component {
   constructor(props) {
     super(props);
-    this.initialValues = {
-      id: '',
-      firstname:'',
-      lastname: '',
-      dob: '',
-      occupation: '',
-      gender: '',
-      phone: '',
-    }
+  
     this.state = {
       users: []
     };
@@ -55,98 +47,94 @@ class Example extends Component {
   }
 
   FormSchema = Yup.object().shape({
-    firstname: Yup.string().required(),
-    lastname: Yup.string().required(),
-    dob: Yup.string().required(),
-    occupation: Yup.string().required(),
-    gender: Yup.string().required(),
-    phone: Yup.string().required(),
+    firstname: Yup.string().required('please type firstname'),
+    lastname: Yup.string().required('please type lastname'),
+    dob: Yup.string().required('please type dob'),
+    occupation: Yup.string().required('please type occupation '),
+    gender: Yup.string().required('please type gender'),
+    phone: Yup.string().required('please type phone'),
   })
 
-  Form = () => (
-    <Container>
-      <h1>My Form</h1>
-      <Formik
-        initialValues={this.initialValues}
-        validationSchema={this.FormSchema}
-        onSubmit={(values, actions) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }, 1000);
-        }}
-      >
-        {props => (
-          <form onSubmit={props.handleSubmit}>
-            <StyledDiv>
-            <label htmlFor=''>firstname</label>
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.firstname}
-              name="firstname"
-            />
-            </StyledDiv>
-            <StyledDiv>
-            <label htmlFor=''>lastname</label>
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.lastname}
-              name="lastname"
-            />
-            </StyledDiv>
-            <StyledDiv>
-            <label htmlFor=''>dob</label>
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.dob}
-              name="dob"
-            />
-            </StyledDiv>
-            <StyledDiv>
-            <label htmlFor=''>occupation</label>
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.occupation}
-              name="occupation"
-            />
-            </StyledDiv>
-            <StyledDiv>
-            <label htmlFor=''>gender</label>
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.gender}
-              name="gender"
-            />
-            </StyledDiv>
-            <StyledDiv>
-            <label htmlFor=''>phone</label>
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.phone}
-              name="phone"
-            />
-            </StyledDiv>
-            {props.errors.name && <div id="feedback">{props.errors.name}</div>}
-            <button type="submit">Submit</button>
-          </form>
-        )}
-      </Formik>
-    </Container>
-  );
-
   render() {
+    const initialValues = {
+      id: '',
+      firstname:'',
+      lastname: '',
+      dob: '',
+      occupation: '',
+      gender: '',
+      phone: '',
+    }
+    const BasicForm = (props) => (
+      <div className='form-group mb-2 col'>
+            <form onSubmit={props.handleSubmit}>
+              <StyledDiv className='col-2'>
+              <label htmlFor=''>firstname</label>
+              <input
+                type="text"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.firstname}
+                name="firstname"
+              />
+              {props.errors.firstname && <span id="feedback" className='col-2'>{props.errors.firstname}</span>}
+              </StyledDiv>
+              <StyledDiv className='col-2'>
+              <label htmlFor=''>lastname</label>
+              <input
+                type="text"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.lastname}
+                name="lastname"
+              />
+              </StyledDiv>
+              <StyledDiv className='col-2'>
+              <label htmlFor=''>dob</label>
+              <input
+                type="text"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.dob}
+                name="dob"
+              />
+              </StyledDiv>
+              <StyledDiv className='col-2'>
+              <label htmlFor=''>occupation</label>
+              <input
+                type="text"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.occupation}
+                name="occupation"
+              />
+              </StyledDiv>
+              <StyledDiv className='col-2'>
+              <label htmlFor=''>gender</label>
+              <input
+                type="text"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.gender}
+                name="gender"
+              />
+              </StyledDiv>
+              <StyledDiv className='col-2'>
+              <label htmlFor=''>phone</label>
+              <input
+                type="text"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.phone}
+                name="phone"
+              />
+              </StyledDiv>
+              {props.errors.name && <div id="feedback">{props.errors.name}</div>}
+              <button type="submit">Submit</button>
+            </form>
+        </div>
+    );
+
     const renderTable = props => {
       console.log(props);
       return (
@@ -290,7 +278,21 @@ class Example extends Component {
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-12">
-            {this.Form()}
+          <Container>
+          <h1>My Form</h1>
+          <Formik
+           initialValues={initialValues}
+           validationSchema={this.FormSchema}
+           render={BasicForm}
+           onSubmit={(values, actions) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+              actions.setSubmitting(false);
+            }, 500);
+             }}
+           >
+           </Formik>
+           </Container>
             <h1>Mumu Table</h1>
 
             <hr className="mb-4" />
