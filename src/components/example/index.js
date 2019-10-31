@@ -5,7 +5,7 @@ import { MumuTable } from "../mumutable";
 import styled from '@emotion/styled'
 import { Formik } from 'formik';
 import * as Yup from 'yup'
-import { Patables } from "../../../node_modules/patables";
+import { Patables, Pagination } from "../../../node_modules/patables";
 
 const List = styled.li`
   list-style-type: none;
@@ -45,7 +45,7 @@ const Error = styled.div`
 class Example extends Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
       users: []
     };
@@ -65,7 +65,7 @@ class Example extends Component {
 
   render() {
     const initialValues = {
-      firstname:'',
+      firstname: '',
       lastname: '',
       dob: '',
       occupation: '',
@@ -73,74 +73,74 @@ class Example extends Component {
     }
     const BasicForm = (props) => (
       <div className='form-group mb-2 col'>
-            <form onSubmit={props.handleSubmit}>
-              <StyledDiv className='input-group'>
-              <Label htmlFor=''>First name</Label>
-              <input
-                className='form-control'
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.firstname}
-                name="firstname"
-              />
-              {props.errors.firstname && <Error id="feedback" className='col-2' >{props.errors.firstname}</Error>}
-              </StyledDiv>
-              <StyledDiv className='input-group'>
-              <Label htmlFor=''>Lastname</Label>
-              <input
-                className='form-control'
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.lastname}
-                name="lastname"
-              />
-              {props.errors.lastname && <Error id="feedback" className='col-2' >{props.errors.lastname}</Error>}
-              </StyledDiv>
-              <StyledDiv className='input-group'>
-              <Label htmlFor=''>DOB</Label>
-              <input
-                className='form-control'
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.dob}
-                name="dob"
-              />
-              {props.errors.dob && <Error id="feedback" className='col-2' >{props.errors.dob}</Error>}
-              </StyledDiv>
-              <StyledDiv className='input-group'>
-              <Label htmlFor=''>Occupation</Label>
-              <input
-                className='form-control'
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.occupation}
-                name="occupation"
-              />
-              {props.errors.occupation && <Error id="feedback" className='col-2' >{props.errors.occupation}</Error>}
-              </StyledDiv>
-              <StyledDiv className='input-group'>
-              <Label htmlFor=''>Phone</Label>
-              <input
-                className='form-control'
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.phone}
-                name="phone"
-              />
-              {props.errors.phone && <Error id="feedback" className='col-2' >{props.errors.phone}</Error>}
-              </StyledDiv>
-              {props.errors.name && <div id="feedback">{props.errors.name}</div>}
-              
-              <button type="submit" className="btn btn-primary mt-3" >
-             Add Data
+        <form onSubmit={props.handleSubmit}>
+          <StyledDiv className='input-group'>
+            <Label htmlFor=''>First name</Label>
+            <input
+              className='form-control'
+              type="text"
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.firstname}
+              name="firstname"
+            />
+            {props.errors.firstname && <Error id="feedback" className='col-2' >{props.errors.firstname}</Error>}
+          </StyledDiv>
+          <StyledDiv className='input-group'>
+            <Label htmlFor=''>Lastname</Label>
+            <input
+              className='form-control'
+              type="text"
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.lastname}
+              name="lastname"
+            />
+            {props.errors.lastname && <Error id="feedback" className='col-2' >{props.errors.lastname}</Error>}
+          </StyledDiv>
+          <StyledDiv className='input-group'>
+            <Label htmlFor=''>DOB</Label>
+            <input
+              className='form-control'
+              type="text"
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.dob}
+              name="dob"
+            />
+            {props.errors.dob && <Error id="feedback" className='col-2' >{props.errors.dob}</Error>}
+          </StyledDiv>
+          <StyledDiv className='input-group'>
+            <Label htmlFor=''>Occupation</Label>
+            <input
+              className='form-control'
+              type="text"
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.occupation}
+              name="occupation"
+            />
+            {props.errors.occupation && <Error id="feedback" className='col-2' >{props.errors.occupation}</Error>}
+          </StyledDiv>
+          <StyledDiv className='input-group'>
+            <Label htmlFor=''>Phone</Label>
+            <input
+              className='form-control'
+              type="text"
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.phone}
+              name="phone"
+            />
+            {props.errors.phone && <Error id="feedback" className='col-2' >{props.errors.phone}</Error>}
+          </StyledDiv>
+          {props.errors.name && <div id="feedback">{props.errors.name}</div>}
+
+          <button type="submit" className="btn btn-primary mt-3" >
+            Add Data
             </button>
-            </form>
-        </div>
+        </form>
+      </div>
     );
 
     const renderTable = props => {
@@ -155,7 +155,7 @@ class Example extends Component {
               value={props.search}
               onChange={props.setSearchTerm}
             />
-            
+
             <div className="col offset-2">
               <div className="form-inline">
                 <label className="my-1 mr-2">Result set: </label>
@@ -192,10 +192,10 @@ class Example extends Component {
                   occupation
                 </th>
                 <th name="phone" onClick={props.setColumnSortToggle}>
-                phone
+                  phone
                 </th>
                 <th name="longitude" onClick={props.setColumnSortToggle}>
-                Action
+                  Action
                 </th>
               </tr>
             </thead>
@@ -209,68 +209,20 @@ class Example extends Component {
                     <TableData>{user.dob}</TableData>
                     <TableData>{user.occupation}</TableData>
                     <TableData>{user.phone}</TableData>
-                    <TableData onClick={()=> props.removeTableData(this.state.users, user.id)}>Remove ❌</TableData>
+                    <TableData onClick={() => props.removeTableData(this.state.users, user.id)}>Remove ❌</TableData>
                   </tr>
                 );
               })}
             </tbody>
           </table>
 
-        <div className="row my-4 justify-content-between">           
-            <div className="col">
-              <ListContainer className="pagination rounded-flat pagination-primary d-flex justify-content-center">
-                <List
-                  className={
-                    props.prevDisabled ? "page-item invisible" : "page-item"
-                  }
-                  onClick={() => {
-                    props.setPageNumber(props.currentPage - 1);
-                  }}
-                >
-                  <a className="page-link" aria-label="Next">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span className="sr-only">Previous</span>
-                  </a>
-                </List>
-
-                {props.paginationButtons.map((page, i) => {
-                  return (
-                    <List
-                      key={i}
-                      className={
-                        props.currentPage === page
-                          ? "page-item active"
-                          : "page-item"
-                      }
-                    >
-                      <span
-                        className="page-link pointer"
-                        onClick={() => {
-                          props.setPageNumber(page);
-                        }}
-                      >
-                        {page}
-                      </span>
-                    </List>
-                  );
-                })}
-
-                <List
-                  className={
-                    props.nextDisabled ? "page-item invisible" : "page-item"
-                  }
-                  onClick={() => {
-                    props.setPageNumber(props.currentPage + 1);
-                  }}
-                >
-                  <a className="page-link" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span className="sr-only">Next</span>
-                  </a>
-                </List>
-              </ListContainer>
-            </div>
-          </div>
+          <Pagination
+            totalPage={props.totalPages}
+            prevDisabled={props.prevDisabled}
+            nextDisabled={props.nextDisabled}
+            setPageNumber={props.setPageNumber}
+            pageNumber={props.currentPage}
+            paginationButtons={props.paginationButtons} />
         </div>
       );
     };
@@ -280,33 +232,33 @@ class Example extends Component {
         <div className="row">
           <div className="col-8 ml-5">
             <div>
-            <h1>Mumu Table</h1>
-            <hr className="mb-4" />
-            <Patables
-              render={renderTable}
-              initialData={this.state.users}
-              resultSet={5}
-              sortColumn="firstname"
-              sortOrder="desc"
-              searchKeys={["firstname", "lastname", 'id']}
-            />
+              <h1>Mumu Table</h1>
+              <hr className="mb-4" />
+              <Patables
+                render={renderTable}
+                initialData={this.state.users}
+                resultSet={5}
+                sortColumn="firstname"
+                sortOrder="desc"
+                searchKeys={["firstname", "lastname", 'id']}
+              />
             </div>
           </div>
 
           <div className="col-3">
             <div>
-            <h1>Add User</h1>
-            <hr className="mb-4" />
+              <h1>Add User</h1>
+              <hr className="mb-4" />
               <Formik
-               initialValues={initialValues}
-               validationSchema={this.FormSchema}
-               render={BasicForm}
-               onSubmit={(values, actions) => {
-                setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
-                  actions.setSubmitting(false);
-                }, 200);
-                 }}
+                initialValues={initialValues}
+                validationSchema={this.FormSchema}
+                render={BasicForm}
+                onSubmit={(values, actions) => {
+                  setTimeout(() => {
+                    alert(JSON.stringify(values, null, 2));
+                    actions.setSubmitting(false);
+                  }, 200);
+                }}
               >
               </Formik>
             </div>
